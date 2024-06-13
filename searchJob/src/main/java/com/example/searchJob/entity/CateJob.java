@@ -22,7 +22,7 @@ public class CateJob {
 	
 	private String major;
 	
-	@OneToMany(mappedBy = "catejob", cascade = CascadeType.ALL)		//khi catejob xoa thi job cx xoa
+	@OneToMany(mappedBy = "cateJob", cascade = CascadeType.ALL)		//khi catejob xoa thi job cx xoa
 	private List<Job> jobs;
 	
 }

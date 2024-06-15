@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.searchJob.dto.CompanyDTO;
 import com.example.searchJob.dto.ResponseDTO;
 import com.example.searchJob.service.CompanyService;
-import com.example.searchJob.service.ImageService;
 
-import lombok.Delegate;
 
 @RestController
 @RequestMapping("/company")
@@ -29,8 +27,8 @@ public class CompanyController {
 	@Autowired
 	CompanyService companyService;
 	
-	@Autowired
-	ImageService imageService;
+//	@Autowired
+//	ImageService imageService;
 	
 	@PostMapping("/create")
 	@ResponseStatus(code = HttpStatus.OK)
@@ -64,10 +62,20 @@ public class CompanyController {
 		return ResponseDTO.<CompanyDTO>builder().code(200).data(companyService.getById(id)).build();
 	}
 	
-	@PostMapping("/search")
+	@PostMapping("/searchname")
 	public ResponseDTO<List<CompanyDTO>> searchByName(@RequestParam(required = false) String name){
 		
-		return ResponseDTO.<List<CompanyDTO>>builder().code(HttpStatus.OK.value()).build();
+		List<CompanyDTO> companyDTOs = companyService.getCompanyByName(name);
+		
+		return ResponseDTO.<List<CompanyDTO>>builder().code(200).data(companyDTOs).build();
+	}
+	
+	@PostMapping("/searchaddress")
+	public ResponseDTO<List<CompanyDTO>> searchByAddress(@RequestParam(required = false) String address){
+		
+		List<CompanyDTO> companyDTOs = companyService.getCompanyByAddress(address);
+		
+		return ResponseDTO.<List<CompanyDTO>>builder().code(200).data(companyDTOs).build();
 	}
 	
 }

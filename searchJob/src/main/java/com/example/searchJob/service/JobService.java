@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.searchJob.dto.JobDTO;
@@ -32,6 +33,7 @@ public interface JobService {
 	List<JobDTO> getByJobOfMajorCate(String major);
 }
 
+@Service
 class JobServiceImpl implements JobService{
 	
 	@Autowired

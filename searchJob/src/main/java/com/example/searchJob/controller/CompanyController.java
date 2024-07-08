@@ -56,7 +56,7 @@ public class CompanyController {
 		return ResponseDTO.<Void>builder().code(HttpStatus.OK.value()).build();
 	}
 	
-	@GetMapping("/id")
+	@GetMapping("/{id}")
 	public ResponseDTO<CompanyDTO> get(@PathVariable("id") int id){
 		
 		return ResponseDTO.<CompanyDTO>builder().code(200).data(companyService.getById(id)).build();

@@ -55,6 +55,8 @@ class CompanyServiceImpl implements CompanyService{
 			
 			company.setAddress(companyDTO.getAddress());
 			
+			company.setDesciption(companyDTO.getDesciption());
+			
 			companyRepo.save(company);
 		}
 		

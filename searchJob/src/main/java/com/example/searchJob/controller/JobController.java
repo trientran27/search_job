@@ -42,7 +42,7 @@ public class JobController {
 		return ResponseDTO.<Void>builder().code(HttpStatus.OK.value()).build();
 	}
 	
-	@GetMapping("/id")
+	@GetMapping("/{id}")
 	public ResponseDTO<JobDTO> get(@PathVariable("id") int id){
 		
 		return ResponseDTO.<JobDTO>builder().code(200).data(jobService.getById(id)).build();
@@ -55,7 +55,7 @@ public class JobController {
 		return ResponseDTO.<List<JobDTO>>builder().code(200).data(jobDTOs).build();
 	}
 	
-	@PostMapping("/searchcompany")
+	@PostMapping("/searchcompany/{idCompany}")
 	public ResponseDTO<List<JobDTO>> getListJobByOfCompany( @PathVariable("idCompany") int idCompany){
 		List<JobDTO> jobDTOs = jobService.getByJobOfCompany(idCompany);
 		

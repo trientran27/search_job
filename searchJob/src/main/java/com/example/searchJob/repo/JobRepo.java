@@ -17,10 +17,10 @@ public interface JobRepo extends JpaRepository<Job, Integer> {
 	//hien chi tiet job theo id
 	
 	//tim kiem job thuoc chuyen nganh cua cate
-	@Query("SELECT j FROM Job j WHERE j.cateJob.major = :major")
+	@Query("SELECT j FROM Job j WHERE j.cateJob.major LIKE %:major%")
     List<Job> findJobByMajorOfCate(@Param("major") String major);
 	
 	//tim kiem job thuoc vi tri(name-cate)
-	@Query("SELECT j FROM Job j WHERE j.cateJob.name = :name")
+	@Query("SELECT j FROM Job j WHERE j.cateJob.name LIKE %:name%")
     List<Job> findJobByNameOfCate(@Param("name") String name);
 }

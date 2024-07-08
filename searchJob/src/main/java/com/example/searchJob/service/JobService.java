@@ -40,6 +40,7 @@ class JobServiceImpl implements JobService{
 	JobRepo jobRepo;
 
 	@Override
+	@Transactional
 	public void create(JobDTO jobDTO) {
 		Job job = new ModelMapper().map(jobDTO, Job.class);
 		jobRepo.save(job);

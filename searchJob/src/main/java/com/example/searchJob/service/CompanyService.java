@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.searchJob.dto.CompanyDTO;
+import com.example.searchJob.dto.JobDTO;
 import com.example.searchJob.entity.Company;
 import com.example.searchJob.repo.CompanyRepo;
 
@@ -23,6 +24,8 @@ public interface CompanyService {
 	void delete(int id);
 	
 	CompanyDTO getById(int id);
+	
+	List<CompanyDTO> getAll();
 	
 	List<CompanyDTO> getCompanyByName(String name);
 	
@@ -76,6 +79,15 @@ class CompanyServiceImpl implements CompanyService{
 		return convert(company);
 	}
 	
+
+	@Override
+	public List<CompanyDTO> getAll() {
+		
+		List<Company> companies = companyRepo.findAll();
+		
+		return companies.stream().map(c -> convert(c)).collect(Collectors.toList());
+	}
+	
 	
 	@Override
 	@Transactional
@@ -99,5 +111,6 @@ class CompanyServiceImpl implements CompanyService{
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return modelMapper.map(company, CompanyDTO.class);
 	}
+
 
 }

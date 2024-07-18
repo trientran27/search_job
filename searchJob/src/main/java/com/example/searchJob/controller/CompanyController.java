@@ -62,6 +62,13 @@ public class CompanyController {
 		return ResponseDTO.<CompanyDTO>builder().code(200).data(companyService.getById(id)).build();
 	}
 	
+	@GetMapping("/list")
+	public ResponseDTO<List<CompanyDTO>> getList(){
+		List<CompanyDTO> companyDTOs = companyService.getAll();
+		
+		return ResponseDTO.<List<CompanyDTO>>builder().code(200).data(companyDTOs).build();
+	}
+	
 	@PostMapping("/searchname")
 	public ResponseDTO<List<CompanyDTO>> searchByName(@RequestParam(required = false) String name){
 		

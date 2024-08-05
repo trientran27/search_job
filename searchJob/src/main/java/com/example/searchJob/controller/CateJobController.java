@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.searchJob.dto.CateJobDTO;
+import com.example.searchJob.dto.JobDTO;
 import com.example.searchJob.dto.ResponseDTO;
 import com.example.searchJob.service.CateJobService;
 
@@ -50,6 +51,13 @@ public class CateJobController {
 		
 		return ResponseDTO.<Void>builder().code(HttpStatus.OK.value()).build();
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseDTO<CateJobDTO> get(@PathVariable("id") int id){
+		
+		return ResponseDTO.<CateJobDTO>builder().code(200).data(cateJobService.getById(id)).build();
+	}
+	
 	@GetMapping("/list")
 	public ResponseDTO<List<CateJobDTO>> getList(){
 		List<CateJobDTO> cateJobDTOs = cateJobService.getAll();

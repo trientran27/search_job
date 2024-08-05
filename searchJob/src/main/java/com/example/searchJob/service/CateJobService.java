@@ -3,6 +3,8 @@ package com.example.searchJob.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.NoResultException;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.searchJob.dto.CateJobDTO;
-import com.example.searchJob.dto.JobDTO;
 import com.example.searchJob.entity.CateJob;
-import com.example.searchJob.entity.Job;
 import com.example.searchJob.repo.CateJobRepo;
 
 public interface CateJobService {
@@ -21,6 +21,8 @@ public interface CateJobService {
 	void update(CateJobDTO cateJobDTO);
 	
 	void delete(int id);
+	
+	CateJobDTO getById(int id);
 	
 	List<CateJobDTO> getAll();
 }
@@ -57,6 +59,13 @@ class CateJobServiceImpl implements CateJobService{
 	public void delete(int id) {
 		cateJobRepo.deleteById(id);
 		
+	}
+	@Override
+	@Transactional
+	public CateJobDTO getById(int id) {
+		
+		CateJob cateJob = cateJobRepo.findById(id).orElseThrow(NoResultException :: new);
+		return convert(cateJob);
 	}
 
 	@Override

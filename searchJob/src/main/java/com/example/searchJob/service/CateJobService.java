@@ -12,8 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.searchJob.dto.CateJobDTO;
+import com.example.searchJob.dto.PageResponse;
 import com.example.searchJob.entity.CateJob;
 import com.example.searchJob.repo.CateJobRepo;
+import com.example.searchJob.repo.PageAndSearchRespository;
+
+import lombok.RequiredArgsConstructor;
 
 public interface CateJobService {
 	void create(CateJobDTO cateJobDTO);
@@ -24,13 +28,17 @@ public interface CateJobService {
 	
 	CateJobDTO getById(int id);
 	
-	List<CateJobDTO> getAll();
+//	List<CateJobDTO> getAll();
+	PageResponse<?> getAll(int offset, int pageSize, String search);
 }
 
 @Service
+@RequiredArgsConstructor
 class CateJobServiceImpl implements CateJobService{
-	@Autowired
-	CateJobRepo cateJobRepo;
+	
+	private final CateJobRepo cateJobRepo;
+	
+	private final PageAndSearchRespository searchRespository;
 
 	@Override
 	@Transactional
@@ -68,17 +76,18 @@ class CateJobServiceImpl implements CateJobService{
 		return convert(cateJob);
 	}
 
-	@Override
-	public List<CateJobDTO> getAll() {
-		List<CateJob> cateJobs = cateJobRepo.findAll();
-		return cateJobs.stream().map(c -> convert(c)).collect(Collectors.toList());
-	}
 	
 	//convert entity sang dto
 	private CateJobDTO convert(CateJob cateJob ) {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return modelMapper.map(cateJob, CateJobDTO.class);
+	}
+
+	@Override
+	public PageResponse<?> getAll(int offset, int pageSize, String search) {
+		
+		return searchRespository.searchCateJobByKeyword(offset, pageSize, search);
 	}
 
 	
